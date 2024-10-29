@@ -1,2 +1,2 @@
 # Project Kodland Pro
-kamus gaul untuk orang tua
+github proyek proyek kodland python pro
