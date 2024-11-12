@@ -1,0 +1,60 @@
+import discord
+from discord.ext import commands
+from passgen import genpass
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hi! I am a bot {bot.user}!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def generate_password (ctx):
+    await ctx.send("length: (as in digits) ")
+    message = await bot.wait_for('message', check=lambda m: m.author == ctx.author and m.channel == ctx.channel )
+    digit = int (message.content)
+
+    await ctx.send("password generated!")
+    await ctx.send(genpass(digit))
+
+phonebook = {'hanafi':'555-7873',
+             'josh':'555-8865',
+             'john wick':'555-9832'}
+
+games = {'terraria':'https://terraria.wiki.gg/wiki/Terraria_Wiki',
+             'plants vs zombies':'https://plantsvszombies.wiki.gg/wiki/Plants_vs._Zombies_Wiki',
+             'minecraft':'https://minecraft.wiki/'}
+
+@bot.command()
+async def check_wiki(ctx, * , arg):
+    if arg in games.keys():
+        gamename = str(arg)
+        number= games[gamename]
+        await ctx.send(f"ini wiki dari {gamename}: {number}")
+    else:
+        await ctx.send(f"tidak ada game di list dengan nama {arg}")
+
+@bot.command()
+async def check_number(ctx, *, arg):
+    if arg in phonebook.keys():
+        person = str(arg)
+        number = phonebook[person]
+        await ctx.send(f'Ini nomor telepon dari {person}: {number}')
+    else:
+        await ctx.send(f'Tidak ada kontak dengan nama {arg}')
+
+
+
+
+bot.run("token")
