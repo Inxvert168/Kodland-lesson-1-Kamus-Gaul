@@ -1,0 +1,42 @@
+import discord
+from discord.ext import commands
+from passgen import genpass
+import os
+import random
+import requests
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def idekreasisampah(ctx,*,arg):
+    req = arg.split()
+    if len(req) == 2:
+        jenis = req[0]
+        level = req[1]
+        jenis_dir = f'kreasi sampah/{jenis}'
+        image_name = random.choice(os.listdir(f'{jenis_dir}/{level}'))
+        with open(f'{jenis_dir}/{level}/{image_name}', "rb") as f:
+            pic = discord.File(f)
+        await ctx.send (file=pic)
+    else:
+        await ctx.send("error perintah tidak ada")
+        
+
+@bot.command()
+async def helpkreasisampah (ctx):
+    await ctx.send("")
+
+
+
+
+
+
+
+bot.run("isi token disini")
