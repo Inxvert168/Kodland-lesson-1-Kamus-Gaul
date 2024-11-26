@@ -31,7 +31,7 @@ async def idekreasisampah(ctx,*,arg):
 
 @bot.command()
 async def helpkreasisampah (ctx):
-    await ctx.send("")
+    await ctx.send("untuk melakukan command $idekreasi sampah adalah menulis command lalu spasi, jenis sampah, spasi lalu mudah atau sulit, contohnya $idekreasisampah plastik mudah.")
 
 
 
